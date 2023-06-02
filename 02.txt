@@ -1,0 +1,77 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = pd.read_csv("student.csv")
+
+# Finding Null Values in specific column and filling null values with "No marks".
+print(pd.isnull(data['Marks']))
+
+data['Marks'].fillna('No Marks',inplace=True)
+print(data)
+
+
+
+
+
+
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = pd.read_csv("student.csv")
+
+
+# Create a boxplot for the "Test 1 score" variable
+boxplot = data.boxplot(column=['ID','Marks'])
+plt.show()
+
+#Detecting outliers using Scatterplot
+fig, ax = plt.subplots(figsize=(18, 10))
+ax.scatter(data['ID'], data['Marks'])
+plt.show()
+
+print(np.where((data['ID']<5) & (data['Marks']>1)))
+
+#median finding
+sorted_rscore= sorted(data['Marks'])
+median=np.median(sorted_rscore)
+print(median)
+
+#Detecting outliers using Z-Score for the Math_score variable and remove the outliers. Histograph
+data['Marks'].plot(kind = 'hist')
+
+______________________________________
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+df=pd.read_csv('StudentsPerformance.csv')
+print(df)
+print(df.isnull())
+series=pd.isnull(df['Math_Score'])
+print(df[series])
+print(df.notnull())
+ndf=df
+col_drop=ndf.dropna(axis=1)
+print(col_drop)
+row_drop=ndf.dropna(axis=0,how='any')
+print(row_drop)
+col=['Math_Score','Reading_Score','Writing_Score','Placement_Score']
+df.boxplot(col)
+print(np.where(df['Math_Score']>90))
+print(np.where(df['Reading_Score']<25))
+print(np.where(df['Writing_Score']<30))
+fig,ax=plt.subplots(figsize=(18,10))
+ax.scatter(df['Placement_Score'],df['Placement_Offer_Count'])
+plt.show()
+print(np.where((df['Placement_Score']<50)))
+print(np.where((df['Placement_Score']>85)))
+z=np.abs(stats.zscore(df['Math_Score']))
+print(z)
+threshold=0.18
+sample_outliers=np.where(z<threshold)
+print(sample_outliers)
+
